@@ -1,0 +1,518 @@
+// ── Color Variables ───────────────────────────────────────────────────────────────
+// Left panel
+$left-bg:           #0C1C0C;
+$left-glow:         rgba(74, 222, 128, 0.12);  // subtle radial accent
+$left-heading:      #FFFFFF;
+$left-body:         #8FAD8F;
+$left-stat-num:     #FFFFFF;
+$left-stat-label:   #5A7F5A;
+$left-stat-divider: #1F3A1F;
+$left-footer:       #4A6B4A;
+
+// Logo
+$logo-text:         #FFFFFF;
+$logo-accent:       #4ADE80;
+
+// Right panel
+$right-bg:          #FFFFFF;
+$portal-hint:       #9CA3AF;
+$portal-link:       #166534;
+
+// Card / form
+$heading-color:     #111827;
+$subtext-color:     #6B7280;
+$label-color:       #374151;
+$input-bg:          #FFFFFF;
+$input-border:      #E5E7EB;
+$input-border-focus:#166534;
+$input-border-error:#EF4444;
+$placeholder-color: #9CA3AF;
+$icon-color:        #9CA3AF;
+$toggle-color:      #9CA3AF;
+$toggle-hover:      #374151;
+
+// Tabs
+$tab-active-text:   #111827;
+$tab-active-line:   #166534;
+$tab-inactive:      #9CA3AF;
+$tab-border:        #E5E7EB;
+
+// Controls
+$check-label:       #6B7280;
+$forgot-link:       #166534;
+$error-color:       #EF4444;
+
+// Submit button
+$btn-bg:            #166534;
+$btn-bg-hover:      #14532D;
+$btn-text:          #FFFFFF;
+
+// Notice
+$notice-icon:       #22C55E;
+$notice-text:       #6B7280;
+$notice-link:       #166534;
+
+// Layout
+$left-width:        55%;
+$right-width:       45%;
+$card-max-width:    420px;
+$transition:        0.15s ease;
+
+// ── Page shell ───────────────────────────────────────────────────────────────────
+.login-page {
+  display: flex;
+  min-height: 100vh;
+  background: $right-bg;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+}
+
+// ── LEFT PANEL ───────────────────────────────────────────────────────────────────
+.login-left {
+  width: $left-width;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 35% 40%, $left-glow 0%, transparent 55%),
+    $left-bg;
+  display: flex;
+  flex-direction: column;
+  padding: 36px 48px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+// Logo
+.login-left__header { flex-shrink: 0; }
+
+.login-logo {
+  display: inline-flex;
+  align-items: baseline;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.login-logo__text   { color: $logo-text; }
+.login-logo__accent { color: $logo-accent; margin: 0 1px; }
+
+// Marketing content pushed to the bottom
+.login-left__content {
+  margin-top: auto;
+  padding-bottom: 32px;
+}
+
+.login-left__heading {
+  font-size: 32px;
+  font-weight: 700;
+  color: $left-heading;
+  line-height: 1.25;
+  margin: 0 0 14px;
+  max-width: 480px;
+}
+
+.login-left__body {
+  font-size: 14px;
+  color: $left-body;
+  line-height: 1.65;
+  margin: 0 0 36px;
+  max-width: 460px;
+}
+
+// Stats row
+.login-stats {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  position: relative;
+}
+
+.login-stats__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+}
+
+.login-stats__value {
+  font-size: 24px;
+  font-weight: 700;
+  color: $left-stat-num;
+  line-height: 1;
+}
+
+.login-stats__label {
+  font-size: 11px;
+  font-weight: 500;
+  color: $left-stat-label;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.login-stats__divider {
+  position: absolute;
+  right: -16px;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background: $left-stat-divider;
+}
+
+// Footer
+.login-left__footer {
+  font-size: 11px;
+  color: $left-footer;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+// ── RIGHT PANEL ──────────────────────────────────────────────────────────────────
+.login-right {
+  flex: 1;
+  background: $right-bg;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+// Top-right hint
+.login-right__top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 20px 36px;
+  flex-shrink: 0;
+}
+
+.login-portal-hint {
+  font-size: 13px;
+  color: $portal-hint;
+}
+
+.login-portal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: $portal-link;
+  text-decoration: none;
+  transition: opacity $transition;
+
+  &:hover { opacity: 0.8; }
+}
+
+.login-portal-link__icon {
+  display: flex;
+  align-items: center;
+  ::ng-deep svg { stroke: currentColor; display: block; }
+}
+
+// Centered card
+.login-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 36px 48px;
+  max-width: $card-max-width;
+  width: 100%;
+  align-self: center;
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────────
+.login-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid $tab-border;
+  margin-bottom: 28px;
+  width: 100%;
+}
+
+.login-tabs__btn {
+  padding: 10px 16px 10px 0;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: $tab-inactive;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color $transition, border-color $transition;
+  white-space: nowrap;
+
+  &:hover:not(.login-tabs__btn--active) {
+    color: darken($tab-inactive, 15%);
+  }
+
+  &--active {
+    color: $tab-active-text;
+    font-weight: 600;
+    border-bottom-color: $tab-active-line;
+  }
+}
+
+// ── Card heading ──────────────────────────────────────────────────────────────────
+.login-card__heading {
+  font-size: 26px;
+  font-weight: 700;
+  color: $heading-color;
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+
+.login-card__subtext {
+  font-size: 13.5px;
+  color: $subtext-color;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+
+// ── Form elements ─────────────────────────────────────────────────────────────────
+form { width: 100%; }
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: $label-color;
+  margin-bottom: 6px;
+}
+
+.form-input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid $input-border;
+  border-radius: 8px;
+  background: $input-bg;
+  transition: border-color $transition, box-shadow $transition;
+  overflow: hidden;
+
+  &:focus-within {
+    border-color: $input-border-focus;
+    box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.08);
+  }
+
+  &--error {
+    border-color: $input-border-error;
+
+    &:focus-within {
+      border-color: $input-border-error;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08);
+    }
+  }
+}
+
+.form-input-icon {
+  display: flex;
+  align-items: center;
+  padding: 0 10px 0 12px;
+  color: $icon-color;
+  flex-shrink: 0;
+
+  ::ng-deep svg { stroke: currentColor; display: block; }
+}
+
+.form-input {
+  flex: 1;
+  height: 42px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13.5px;
+  color: $heading-color;
+  padding: 0 12px 0 0;
+
+  &::placeholder { color: $placeholder-color; }
+}
+
+.form-input-toggle {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background: transparent;
+  border: none;
+  color: $toggle-color;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color $transition;
+
+  &:hover { color: $toggle-hover; }
+
+  ::ng-deep svg { stroke: currentColor; display: block; }
+}
+
+.form-error {
+  font-size: 12px;
+  color: $error-color;
+  margin: 4px 0 0;
+}
+
+// Remember + Forgot row
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.form-check__box {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  border: 1.5px solid $input-border;
+  cursor: pointer;
+  accent-color: $btn-bg;
+  flex-shrink: 0;
+}
+
+.form-check__label {
+  font-size: 12.5px;
+  color: $check-label;
+}
+
+.form-forgot {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: $forgot-link;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity $transition;
+
+  &:hover { opacity: 0.8; }
+}
+
+// Submit button
+.login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 44px;
+  background: $btn-bg;
+  color: $btn-text;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background $transition, opacity $transition;
+  letter-spacing: 0.2px;
+
+  &:hover:not(:disabled) { background: $btn-bg-hover; }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.login-btn__icon {
+  display: flex;
+  align-items: center;
+  ::ng-deep svg { stroke: currentColor; display: block; }
+}
+
+// Info notice
+.login-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.login-notice__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: $notice-icon;
+  margin-top: 1px;
+
+  ::ng-deep svg { stroke: currentColor; display: block; }
+}
+
+.login-notice__text {
+  font-size: 12px;
+  color: $notice-text;
+  line-height: 1.55;
+
+  a {
+    color: $notice-link;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover { text-decoration: underline; }
+  }
+}
+
+// ── Responsive ───────────────────────────────────────────────────────────────────
+@media (max-width: 960px) {
+  .login-left {
+    width: 44%;
+    padding: 28px 32px;
+  }
+
+  .login-left__heading { font-size: 26px; }
+
+  .login-card {
+    padding: 24px 28px 40px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-page { flex-direction: column; }
+
+  .login-left {
+    width: 100%;
+    min-height: unset;
+    padding: 32px 24px 40px;
+
+    // Collapsed mode: hide body/stats, keep logo + headline
+    .login-left__body   { display: none; }
+    .login-stats        { gap: 20px; }
+    .login-left__heading { font-size: 22px; }
+  }
+
+  .login-left__content { margin-top: 28px; padding-bottom: 0; }
+
+  .login-right {
+    flex: unset;
+    width: 100%;
+  }
+
+  .login-right__top { padding: 16px 20px; }
+
+  .login-card {
+    padding: 20px 20px 40px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-left { padding: 24px 20px 28px; }
+
+  .login-stats { flex-wrap: wrap; gap: 16px; }
+
+  .form-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

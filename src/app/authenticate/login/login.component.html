@@ -1,0 +1,104 @@
+      <!-- Auth-method tabs — driven by LoginTab[] config -->
+      <div class="login-tabs" role="tablist">
+        <button
+          *ngFor="let tab of tabs"
+          class="login-tabs__btn"
+          [class.login-tabs__btn--active]="activeTab === tab.id"
+          (click)="setTab(tab.id)"
+          role="tab"
+          [attr.aria-selected]="activeTab === tab.id">
+          {{ tab.label }}
+        </button>
+      </div>
+
+      <!-- Heading -->
+      <h2 class="login-card__heading">Welcome back</h2>
+      <p class="login-card__subtext">
+        Sign in to the Elevate admin portal. We'll send a one-time passcode to
+        your registered device.
+      </p>
+
+      <!-- Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- Work email -->
+        <div class="form-group">
+          <label class="form-label" for="login-email">Work email</label>
+          <div class="form-input-wrap"
+               [class.form-input-wrap--error]="email?.invalid && email.touched">
+            <span class="form-input-icon" [innerHTML]="icons['mail']"></span>
+            <input
+              id="login-email"
+              class="form-input"
+              type="email"
+              formControlName="email"
+              placeholder="admin@elevate.gh"
+              autocomplete="email" />
+          </div>
+          <p *ngIf="email?.touched && email?.errors?.['required']" class="form-error">
+            Email is required.
+          </p>
+          <p *ngIf="email?.touched && email?.errors?.['email']" class="form-error">
+            Enter a valid email address.
+          </p>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
+          <div class="form-input-wrap"
+               [class.form-input-wrap--error]="password?.invalid && password.touched">
+            <span class="form-input-icon" [innerHTML]="icons['lock']"></span>
+            <input
+              id="login-password"
+              class="form-input"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              autocomplete="current-password" />
+            <button
+              type="button"
+              class="form-input-toggle"
+              (click)="togglePassword()"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+              [innerHTML]="showPassword ? icons['eyeOff'] : icons['eye']">
+            </button>
+          </div>
+          <p *ngIf="password?.touched && password?.errors?.['required']" class="form-error">
+            Password is required.
+          </p>
+          <p *ngIf="password?.touched && password?.errors?.['minlength']" class="form-error">
+            Password must be at least 6 characters.
+          </p>
+        </div>
+
+        <!-- Remember device + Forgot password -->
+        <div class="form-row">
+          <label class="form-check">
+            <input
+              class="form-check__box"
+              type="checkbox"
+              formControlName="rememberDevice" />
+            <span class="form-check__label">Remember this device for 30 days</span>
+          </label>
+          <a routerLink="/authenticate/forgot-password" class="form-forgot">Forgot password?</a>
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="login-btn"
+          [disabled]="isSubmitting">
+          <span>{{ isSubmitting ? 'Sending OTP…' : 'Continue with OTP' }}</span>
+          <span *ngIf="!isSubmitting" [innerHTML]="icons['arrowRight']" class="login-btn__icon"></span>
+        </button>
+
+      </form>
+
+      <!-- Info notice -->
+      <div class="login-notice">
+        <span class="login-notice__icon" [innerHTML]="icons['infoCircle']"></span>
+        <span class="login-notice__text">
+          This portal is for authorised administrators only. By signing in you agree
+          to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        </span>
+      </div>

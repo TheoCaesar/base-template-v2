@@ -1,0 +1,87 @@
+<aside class="sidebar" [class.sidebar--collapsed]="isCollapsed">
+
+  <!-- ── Logo / Header ──────────────────────────────────────────── -->
+  <div class="sidebar__header">
+
+    <div class="sidebar__wordmark" [class.sidebar__wordmark--hidden]="isCollapsed">
+      <span class="sidebar__wordmark-white">ELE</span>
+      <span class="sidebar__wordmark-accent"> ∧</span>
+      <span class="sidebar__wordmark-white">ATE</span>
+    </div>
+
+    <div class="sidebar__wordmark-icon" [class.sidebar__wordmark-icon--visible]="isCollapsed">
+      <span class="sidebar__wordmark-accent-lg">∧</span>
+    </div>
+
+    <p class="sidebar__subtitle" [class.sidebar__subtitle--hidden]="isCollapsed">
+      Admin Portal &middot; Super Admin
+    </p>
+
+    <!-- Collapse toggle -->
+    <button class="sidebar__toggle" (click)="toggle()" [title]="isCollapsed ? 'Expand' : 'Collapse'">
+      <span [innerHTML]="isCollapsed ? icons['menuOpen'] : icons['menuClose']"></span>
+    </button>
+
+  </div>
+
+  <!-- ── Navigation ─────────────────────────────────────────────── -->
+  <nav class="sidebar__nav">
+    <ng-container *ngFor="let section of navSections">
+      <div class="sidebar__section">
+
+        <span *ngIf="section.label" class="sidebar__section-label"
+              [class.sidebar__section-label--hidden]="isCollapsed">
+          {{ section.label }}
+        </span>
+
+        <a *ngFor="let item of section.items"
+           class="sidebar__item"
+           [routerLink]="item.route"
+           routerLinkActive="sidebar__item--active"
+           [routerLinkActiveOptions]="{ exact: true }"
+           [title]="isCollapsed ? item.label : ''">
+
+          <span class="sidebar__item-icon" [innerHTML]="icons[item.iconKey]"></span>
+
+          <span class="sidebar__item-label" [class.sidebar__item-label--hidden]="isCollapsed">
+            {{ item.label }}
+          </span>
+
+          <span *ngIf="item.badge && !isCollapsed" class="sidebar__item-badge">
+            {{ item.badge }}
+          </span>
+
+          <!-- Collapsed badge dot -->
+          <span *ngIf="item.badge && isCollapsed" class="sidebar__item-badge-dot"></span>
+
+        </a>
+
+      </div>
+    </ng-container>
+  </nav>
+
+  <!-- ── Footer ─────────────────────────────────────────────────── -->
+  <div class="sidebar__footer" [class.sidebar__footer--collapsed]="isCollapsed">
+
+    <div class="sidebar__avatar">{{ user.initials }}</div>
+
+    <div class="sidebar__user-info" [class.sidebar__user-info--hidden]="isCollapsed">
+      <span class="sidebar__user-name">{{ user.name }}</span>
+      <span class="sidebar__user-role">{{ user.role }}</span>
+    </div>
+
+    <button *ngIf="!isCollapsed"
+            class="sidebar__logout"
+            title="Sign out"
+            [innerHTML]="icons['logout']">
+    </button>
+
+  </div>
+
+</aside>
+
+<!-- Mobile backdrop -->
+<div class="sidebar__backdrop"
+     [class.sidebar__backdrop--visible]="!isCollapsed"
+     (click)="toggle()">
+</div>

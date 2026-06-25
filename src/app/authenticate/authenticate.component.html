@@ -1,0 +1,65 @@
+<div class="login-page">
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       LEFT PANEL — branding + marketing
+  ══════════════════════════════════════════════════════════════════════ -->
+  <section class="login-left">
+
+    <!-- Logo -->
+    <header class="login-left__header">
+      <div class="login-logo">
+        <span class="login-logo__text">ELE</span>
+        <span class="login-logo__accent"> ∧</span>
+        <span class="login-logo__text">ATE</span>
+      </div>
+    </header>
+
+    <!-- Marketing content (bottom of left panel) -->
+    <div class="login-left__content">
+      <h1 class="login-left__heading">
+        Supply chain financing, elevated.
+      </h1>
+      <p class="login-left__body">
+        Operate Ghana's fintech discounting network from one dashboard — onboard
+        distributors, set programme terms, monitor disbursements, and stay ahead
+        of every repayment cycle.
+      </p>
+
+      <!-- Stats — driven by StatItem[] config -->
+      <div class="login-stats">
+        <div *ngFor="let stat of stats; let last = last" class="login-stats__item">
+          <span class="login-stats__value">{{ stat.value }}</span>
+          <span class="login-stats__label">{{ stat.label }}</span>
+          <div *ngIf="!last" class="login-stats__divider"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom fine print -->
+    <footer class="login-left__footer">
+      <span>© 2026 Elevate Finance Ltd. · Privacy Policy · Terms of Service</span>
+    </footer>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       RIGHT PANEL — login form
+  ══════════════════════════════════════════════════════════════════════ -->
+  <section class="login-right">
+
+    <!-- Top-right portal switch link -->
+    <div class="login-right__top">
+      <span class="login-portal-hint">Not an administrator?</span>
+      <a href="#" class="login-portal-link">
+        Onboarding portal
+        <span [innerHTML]="icons['arrowRight']" class="login-portal-link__icon"></span>
+      </a>
+    </div>
+
+    <!-- Centered form card -->
+    <div class="login-card">
+        <router-outlet />
+    </div>
+  </section>
+
+</div><!-- /login-page -->

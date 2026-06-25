@@ -1,0 +1,516 @@
+// ── Color Variables ────────────────────────────────────────────────────────────
+$dt-bg:                    #FFFFFF;
+$dt-header-text: #80858c;
+$dt-header-weight:         600;
+$dt-body-text:             #111827;
+$dt-muted-text:            #6B7280;
+$dt-link-text:             #2563EB;
+$dt-row-border:            #F3F4F6;
+$dt-row-hover: rgb(249 250 251 / 0.65);
+$dt-row-stripe-bg: rgb(243 245 239 / 0.30);  // dim green — even-row stripe
+
+// Search
+$dt-search-bg:             #FFFFFF;
+$dt-search-border:         #E5E7EB;
+$dt-search-placeholder:    #9CA3AF;
+
+// Filter buttons
+$dt-filter-border:         #D1D5DB;
+$dt-filter-text:           #374151;
+$dt-filter-icon:           #22C55E;   // green funnel/calendar icon
+
+// Action icons
+$dt-action-icon:           #9CA3AF;
+$dt-action-hover-text:     #374151;
+$dt-action-hover-bg:       #F3F4F6;
+$dt-action-danger-hover:   #DC2626;
+
+// Toolbar right
+$dt-sort-label-text:       #6B7280;
+$dt-export-border:         #D1D5DB;
+$dt-export-text:           #374151;
+$dt-create-bg:             #166534;   // dark green
+$dt-create-text:           #FFFFFF;
+
+// Badge variants
+$badge-active-bg:          #F0FDF4;
+$badge-active-border:      #BBF7D0;
+$badge-active-text:        #16A34A;
+$badge-deact-bg:           #F9FAFB;
+$badge-deact-border:       #E5E7EB;
+$badge-deact-text:         #6B7280;
+$badge-new-bg:             #FFF7ED;
+$badge-new-border:         #FED7AA;
+$badge-new-text:           #EA580C;
+
+// Chip defaults
+$chip-bg:                  #F3F4F6;
+$chip-border:              #E5E7EB;
+$chip-text:                #374151;
+
+// Footer / pagination
+$dt-footer-text:           #6B7280;
+$pag-border:               #E5E7EB;
+$pag-text:                 #6B7280;
+$pag-hover-bg:             #F3F4F6;
+$pag-active-bg:            #166534;
+$pag-active-text:          #FFFFFF;
+
+// Misc
+$dt-transition:            0.15s ease;
+$dt-radius:                6px;
+
+// ── Host ───────────────────────────────────────────────────────────────────────
+// No horizontal padding here — the component sits flush against its parent's edges.
+// Horizontal rhythm lives inside the table cells only.
+:host {
+  display: block;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding-block: 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.07);
+}
+
+// ── Toolbar ────────────────────────────────────────────────────────────────────
+.dt-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 16px;
+  padding-inline: 16px;
+  flex-wrap: wrap;
+}
+
+.dt-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.dt-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+// ── Search ─────────────────────────────────────────────────────────────────────
+.dt-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  background: $dt-search-bg;
+  border: 1px solid $dt-search-border;
+  border-radius: $dt-radius;
+  min-width: 200px;
+  max-width: 300px;
+
+  ::ng-deep svg { stroke: currentColor; }
+}
+
+.dt-search__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: $dt-search-placeholder;
+}
+
+.dt-search__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  color: $dt-body-text;
+
+  &::placeholder { color: $dt-search-placeholder; }
+}
+
+// ── Filter buttons ─────────────────────────────────────────────────────────────
+.dt-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px;
+  background: #FFFFFF;
+  border: 1px solid $dt-filter-border;
+  border-radius: $dt-radius;
+  color: $dt-filter-text;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background $dt-transition;
+
+  &:hover { background: $dt-row-hover; }
+}
+
+.dt-filter-btn__icon {
+  display: flex;
+  align-items: center;
+  color: $dt-filter-icon;
+
+  ::ng-deep svg { stroke: currentColor; }
+}
+
+// ── Toolbar right buttons ──────────────────────────────────────────────────────
+.dt-sort-label {
+  font-size: 13px;
+  color: $dt-sort-label-text;
+}
+
+.dt-export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  background: #FFFFFF;
+  border: 1px solid $dt-export-border;
+  border-radius: $dt-radius;
+  color: $dt-export-text;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background $dt-transition;
+
+  &:hover { background: $dt-row-hover; }
+
+  ::ng-deep svg { stroke: currentColor; }
+}
+
+.dt-create-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  background: $dt-create-bg;
+  border: none;
+  border-radius: $dt-radius;
+  color: $dt-create-text;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter $dt-transition;
+
+  &:hover { filter: brightness(1.1); }
+
+  ::ng-deep svg { stroke: currentColor; }
+}
+
+// ── Scroll wrapper (horizontal scroll on small screens) ────────────────────────
+.dt-scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+// ── Table ──────────────────────────────────────────────────────────────────────
+.dt-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: $dt-bg;
+
+  // ── Header ──
+  // border-top on <th> cells → with border-collapse:collapse these merge into
+  // one continuous line across all columns = true edge-to-edge top frame line.
+  thead tr th {
+    padding: 10px 16px;   // 16px left/right keeps content clear of the border lines
+    font-size: 11px;
+    font-weight: $dt-header-weight;
+    color: $dt-header-text;
+    background: $dt-row-stripe-bg;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    text-align: left;
+    border-top:    2px solid $dt-row-border;   // top frame line
+    border-bottom: 2px solid $dt-row-border;   // header / body separator
+    white-space: nowrap;
+
+    &.dt-th--right  { text-align: right; }
+    &.dt-th--center { text-align: center; }
+  }
+
+  // ── Rows ──
+  tbody .dt-row {
+    transition: background $dt-transition;
+
+    // Even rows (index 2, 4, 6 … counted from the header at index 0)
+    &:nth-child(even) { background: $dt-row-stripe-bg; }
+
+    // Hover always wins over the stripe colour
+    &:hover { background: $dt-row-hover; }
+  }
+
+  // ── Cells ──
+  // border-bottom on every <td> cell → merges into a full-width divider per row.
+  // The last row's border-bottom becomes the bottom frame line — no wrapper trick needed.
+  tbody td {
+    padding: 8px 15px;   // matches header cell horizontal rhythm
+    font-size: 13.5px;
+    color: $dt-body-text;
+    vertical-align: middle;
+    border-bottom: 2px solid $dt-row-border;   // row divider + bottom frame line
+
+    &.dt-td--right  { text-align: right; }
+    &.dt-td--center { text-align: center; }
+  }
+}
+
+// ── Cell types ─────────────────────────────────────────────────────────────────
+
+.dt-link {
+  color: $dt-link-text;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover { text-decoration: underline; }
+}
+
+.dt-phone { color: $dt-body-text; }
+
+.dt-date { color: $dt-muted-text; font-size: 13px; }
+
+// Badge
+.dt-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+// Chip (small type indicator, e.g. "Bank")
+.dt-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid;
+  font-size: 12px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+// Avatar + text
+.dt-avatar-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dt-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFFFFF;
+  flex-shrink: 0;
+  letter-spacing: 0.3px;
+
+  &--square { border-radius: 6px; }
+}
+
+.dt-avatar-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.dt-avatar-name {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: $dt-body-text;
+  white-space: nowrap;
+}
+
+.dt-avatar-sub {
+  font-size: 11.5px;
+  color: $dt-muted-text;
+}
+
+// Contact (name + email stacked)
+.dt-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dt-contact-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: $dt-body-text;
+}
+
+.dt-contact-email {
+  font-size: 12px;
+  color: $dt-link-text;
+}
+
+// Actions
+.dt-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.dt-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: $dt-action-icon;
+  cursor: pointer;
+  transition: color $dt-transition, background $dt-transition;
+
+  &:hover {
+    color: $dt-action-hover-text;
+    background: $dt-action-hover-bg;
+  }
+
+  &--danger:hover { color: $dt-action-danger-hover; }
+
+  ::ng-deep svg { stroke: currentColor; display: block; }
+}
+
+// Empty / loading
+.dt-empty {
+  padding: 48px 16px;
+  text-align: center;
+  color: $dt-muted-text;
+  font-size: 14px;
+}
+
+.dt-skeleton-bar {
+  display: block;
+  height: 16px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #F3F4F6 25%, #E5E7EB 50%, #F3F4F6 75%);
+  background-size: 200% 100%;
+  animation: dt-shimmer 1.4s infinite;
+}
+
+@keyframes dt-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+// ── Footer ─────────────────────────────────────────────────────────────────────
+.dt-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  padding-inline: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.dt-count {
+  font-size: 13px;
+  color: $dt-footer-text;
+}
+
+// Pagination
+.dt-pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dt-pag-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  border-radius: $dt-radius;
+  border: 1px solid $pag-border;
+  background: #FFFFFF;
+  color: $pag-text;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background $dt-transition, color $dt-transition;
+
+  &:hover:not(:disabled):not(.dt-pag-btn--active) {
+    background: $pag-hover-bg;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  &--active {
+    background: $pag-active-bg;
+    color: $pag-active-text;
+    border-color: $pag-active-bg;
+    font-weight: 600;
+    cursor: default;
+  }
+
+  ::ng-deep svg { stroke: currentColor; display: block; }
+}
+
+// ── Responsive ─────────────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .dt-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .dt-toolbar-left,
+  .dt-toolbar-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .dt-search {
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .dt-table thead tr th,
+  .dt-table tbody td {
+    padding: 10px 12px;
+    font-size: 12.5px;
+  }
+
+  .dt-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

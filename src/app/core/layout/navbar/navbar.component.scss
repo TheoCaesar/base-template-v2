@@ -1,0 +1,229 @@
+// ── Color Variables ───────────────────────────────────────────────────────────
+$navbar-bg:           #FFFFFF;
+$navbar-border:       #E8EAED;
+
+// Breadcrumb
+$crumb-muted:         #9CA3AF;
+$crumb-separator:     #D1D5DB;
+$crumb-active:        #111827;
+
+// Switch portal button
+$portal-border:       #E2E8F0;
+$portal-text:         #374151;
+$portal-icon-bg:      #4ADE80;
+$portal-chevron:      #9CA3AF;
+$portal-hover-bg:     #F8FAFC;
+
+// Search bar
+$search-bg:           #F3F4F6;
+$search-icon:         #9CA3AF;
+$search-placeholder:  #9CA3AF;
+$search-text:         #111827;
+$kbd-bg:              #E5E7EB;
+$kbd-text:            #6B7280;
+
+// Bell
+$bell-icon:           #6B7280;
+$bell-hover-bg:       #F1F5F9;
+
+// User menu
+$avatar-bg:           #4ADE80;
+$avatar-text:         #0B1526;
+$user-name:           #111827;
+$user-chevron:        #9CA3AF;
+$user-hover-bg:       #F8FAFC;
+
+// ── Navbar Shell ──────────────────────────────────────────────────────────────
+.navbar {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 24px;
+  background: $navbar-bg;
+  border-bottom: 1px solid $navbar-border;
+  width: 100%;
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+// ── Breadcrumb ────────────────────────────────────────────────────────────────
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.breadcrumb__link {
+  font-size: 13px;
+  font-weight: 400;
+  color: $crumb-muted;
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover { color: darken($crumb-muted, 15%); }
+}
+
+.breadcrumb__sep {
+  display: flex;
+  align-items: center;
+  color: $crumb-separator;
+}
+
+.breadcrumb__current {
+  font-size: 13px;
+  font-weight: 600;
+  color: $crumb-active;
+}
+
+// ── Spacer ────────────────────────────────────────────────────────────────────
+.navbar__spacer { flex: 1; }
+
+// ── Right actions cluster ─────────────────────────────────────────────────────
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+// ── Switch portal button ──────────────────────────────────────────────────────
+.portal-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid $portal-border;
+  background: $navbar-bg;
+  color: $portal-text;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+
+  &:hover { background: $portal-hover-bg; }
+}
+
+.portal-btn__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: $portal-icon-bg;
+  flex-shrink: 0;
+}
+
+.portal-btn__chevron {
+  display: flex;
+  align-items: center;
+  color: $portal-chevron;
+}
+
+// ── Search bar ────────────────────────────────────────────────────────────────
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 8px;
+  background: $search-bg;
+  width: 280px;
+}
+
+.search-bar__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: $search-icon;
+}
+
+.search-bar__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  color: $search-text;
+  min-width: 0;
+
+  &::placeholder { color: $search-placeholder; }
+}
+
+.search-bar__kbd {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: $kbd-bg;
+  color: $kbd-text;
+  font-size: 10.5px;
+  font-weight: 500;
+  flex-shrink: 0;
+  letter-spacing: 0.2px;
+}
+
+// ── Bell button ───────────────────────────────────────────────────────────────
+.bell-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: $bell-icon;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover { background: $bell-hover-bg; }
+}
+
+// ── User menu button ──────────────────────────────────────────────────────────
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 8px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover { background: $user-hover-bg; }
+}
+
+.user-menu__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: $avatar-bg;
+  color: $avatar-text;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+
+.user-menu__name {
+  font-size: 13px;
+  font-weight: 500;
+  color: $user-name;
+  white-space: nowrap;
+}
+
+.user-menu__chevron {
+  display: flex;
+  align-items: center;
+  color: $user-chevron;
+}

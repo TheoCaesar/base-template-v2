@@ -1,0 +1,58 @@
+<nav class="navbar">
+
+  <!-- ── Breadcrumb ─────────────────────────────────────────────── -->
+  <div class="breadcrumb">
+    <ng-container *ngFor="let crumb of breadcrumbs; let last = last">
+
+      <a *ngIf="!last && crumb.route"
+         [routerLink]="crumb.route"
+         class="breadcrumb__link">
+        {{ crumb.label }}
+      </a>
+
+      <span *ngIf="last" class="breadcrumb__current">{{ crumb.label }}</span>
+
+      <span *ngIf="!last"
+            class="breadcrumb__sep"
+            [innerHTML]="icons['chevronRight']">
+      </span>
+
+    </ng-container>
+  </div>
+
+  <!-- Spacer -->
+  <div class="navbar__spacer"></div>
+
+  <!-- ── Right actions ──────────────────────────────────────────── -->
+  <div class="navbar__actions">
+
+    <!-- Switch portal -->
+    <button class="portal-btn">
+      <span class="portal-btn__icon" [innerHTML]="icons['portalSwitch']"></span>
+      <span>Switch portal</span>
+      <span class="portal-btn__chevron" [innerHTML]="icons['chevronDown']"></span>
+    </button>
+
+    <!-- Search bar -->
+    <div class="search-bar">
+      <span class="search-bar__icon" [innerHTML]="icons['search']"></span>
+      <input
+        class="search-bar__input"
+        type="text"
+        placeholder="Search admins, FIs, entities, ..." />
+      <span class="search-bar__kbd">⌘K</span>
+    </div>
+
+    <!-- Notification bell -->
+    <button class="bell-btn" [innerHTML]="icons['bell']"></button>
+
+    <!-- User menu -->
+    <button class="user-menu">
+      <div class="user-menu__avatar">{{ user.initials }}</div>
+      <span class="user-menu__name">{{ user.name }}</span>
+      <span class="user-menu__chevron" [innerHTML]="icons['chevronDown']"></span>
+    </button>
+
+  </div>
+
+</nav>

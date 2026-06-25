@@ -1,0 +1,270 @@
+<div class="card">
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+  TOP TOOLBAR  (toggle individual features via config)
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="dt-toolbar" *ngIf="showToolbar">
+
+  <!-- Left: search + filters -->
+  <div class="dt-toolbar-left">
+
+    <!-- Search -->
+    <div class="dt-search" *ngIf="config.showSearch !== false">
+      <span class="dt-search__icon" [innerHTML]="icons['search']"></span>
+      <input
+        #searchRef
+        class="dt-search__input"
+        type="text"
+        [value]="searchValue"
+        [placeholder]="config.searchPlaceholder || 'Search…'"
+        (input)="onSearch(searchRef.value)" />
+    </div>
+
+    <!-- Filter buttons -->
+    <ng-container *ngIf="config.showFilters !== false && config.filters?.length">
+      <button
+        *ngFor="let filter of config.filters"
+        class="dt-filter-btn"
+        (click)="onFilterClick(filter)">
+        <span class="dt-filter-btn__icon" [innerHTML]="getFilterIcon(filter)"></span>
+        <span>{{ filter.label }}</span>
+      </button>
+    </ng-container>
+
+  </div>
+
+  <!-- Right: sort label · export · create -->
+  <div class="dt-toolbar-right">
+
+    <span *ngIf="config.showSortLabel && config.sortLabel" class="dt-sort-label">
+      {{ config.sortLabel }}
+    </span>
+
+    <button *ngIf="config.showExportBtn" class="dt-export-btn" (click)="exportClick.emit()">
+      <span [innerHTML]="icons['download']"></span>
+      <span>{{ config.exportBtnLabel || 'Export' }}</span>
+    </button>
+
+    <button *ngIf="config.showCreateBtn" class="dt-create-btn" (click)="createClick.emit()">
+      <span [innerHTML]="icons['plus']"></span>
+      <span>{{ config.createBtnLabel || 'Create' }}</span>
+    </button>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+  TABLE
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="dt-scroll-wrapper">
+  <table class="dt-table">
+
+    <!-- Header -->
+    <thead>
+      <tr>
+        <th
+          *ngFor="let col of visibleColumns"
+          [ngStyle]="col.headerStyle"
+          [ngClass]="col.headerClass || ''"
+          [class.dt-th--right]="col.align === 'right'"
+          [class.dt-th--center]="col.align === 'center'"
+          [style.width]="col.width"
+          [style.minWidth]="col.minWidth">
+          {{ col.label }}
+        </th>
+      </tr>
+    </thead>
+
+    <!-- Body -->
+    <tbody>
+
+      <!-- Empty state -->
+      <tr *ngIf="!loading && data.length === 0">
+        <td [attr.colspan]="visibleColumns.length" class="dt-empty">
+          {{ config.emptyMessage || 'No records found.' }}
+        </td>
+      </tr>
+
+      <!-- Loading skeleton -->
+      <tr *ngIf="loading" class="dt-skeleton-row">
+        <td [attr.colspan]="visibleColumns.length" class="dt-empty">
+          <span class="dt-skeleton-bar"></span>
+        </td>
+      </tr>
+
+      <!-- Data rows -->
+      <tr
+        *ngFor="let row of data; trackBy: trackByFn"
+        class="dt-row"
+        (click)="rowClick.emit(row)">
+
+        <td
+          *ngFor="let col of visibleColumns"
+          [ngStyle]="getCellStyle(col, row)"
+          [ngClass]="getCellClass(col, row)"
+          [class.dt-td--right]="col.align === 'right'"
+          [class.dt-td--center]="col.align === 'center'"
+          [style.width]="col.width"
+          [style.minWidth]="col.minWidth">
+
+          <!-- ── Cell type switch ─────────────────────────────────────── -->
+          <ng-container [ngSwitch]="col.type">
+
+            <!-- text (default) -->
+            <ng-container *ngSwitchDefault>
+              {{ getCellValue(row, col) }}
+            </ng-container>
+
+            <!-- email -->
+            <a *ngSwitchCase="'email'"
+               class="dt-link"
+               [href]="'mailto:' + getCellValue(row, col)">
+              {{ getCellValue(row, col) }}
+            </a>
+
+            <!-- link -->
+            <span *ngSwitchCase="'link'" class="dt-link">
+              {{ getCellValue(row, col) }}
+            </span>
+
+            <!-- phone -->
+            <span *ngSwitchCase="'phone'" class="dt-phone">
+              {{ getCellValue(row, col) }}
+            </span>
+
+            <!-- date -->
+            <span *ngSwitchCase="'date'" class="dt-date">
+              {{ getCellValue(row, col) }}
+            </span>
+
+            <!-- badge -->
+            <ng-container *ngSwitchCase="'badge'">
+              <span class="dt-badge"
+                    [style.backgroundColor]="getBadgeConfig(col, row).bg"
+                    [style.color]="getBadgeConfig(col, row).text"
+                    [style.borderColor]="getBadgeConfig(col, row).border">
+                {{ getCellValue(row, col) }}
+              </span>
+            </ng-container>
+
+            <!-- chip (type tag like "Bank") -->
+            <ng-container *ngSwitchCase="'chip'">
+              <span class="dt-chip"
+                    [style.backgroundColor]="getChipConfig(col, row).bg"
+                    [style.color]="getChipConfig(col, row).text"
+                    [style.borderColor]="getChipConfig(col, row).border">
+                {{ getCellValue(row, col) }}
+              </span>
+            </ng-container>
+
+            <!-- avatar-text (circle or square avatar + name [+ subtext]) -->
+            <ng-container *ngSwitchCase="'avatar-text'">
+              <div class="dt-avatar-cell">
+                <div
+                  class="dt-avatar"
+                  [class.dt-avatar--square]="col.avatarShape === 'square'"
+                  [style.backgroundColor]="getAvatarBg(col, row)">
+                  {{ getInitials(col, row) }}
+                </div>
+                <div class="dt-avatar-info">
+                  <span class="dt-avatar-name">{{ getCellValue(row, col) }}</span>
+                  <span *ngIf="col.subtextKey && row[col.subtextKey]"
+                        class="dt-avatar-sub">
+                    {{ row[col.subtextKey] }}
+                  </span>
+                </div>
+              </div>
+            </ng-container>
+
+            <!-- contact (name line + email line stacked) -->
+            <ng-container *ngSwitchCase="'contact'">
+              <div class="dt-contact">
+                <span class="dt-contact-name">
+                  {{ col.contactNameKey ? row[col.contactNameKey] : getCellValue(row, col) }}
+                </span>
+                <span *ngIf="col.contactEmailKey" class="dt-contact-email">
+                  {{ row[col.contactEmailKey] }}
+                </span>
+              </div>
+            </ng-container>
+
+            <!-- actions -->
+            <ng-container *ngSwitchCase="'actions'">
+              <div class="dt-actions">
+                <ng-container *ngFor="let action of col.actions">
+                  <button
+                    *ngIf="isActionVisible(action, row)"
+                    class="dt-action-btn"
+                    [ngClass]="getActionClass(action, row)"
+                    [title]="action.title || action.key"
+                    (click)="onAction(action.key, row, $event)"
+                    [innerHTML]="icons[action.icon]">
+                  </button>
+                </ng-container>
+              </div>
+            </ng-container>
+
+            <!-- custom ng-template -->
+            <ng-container *ngSwitchCase="'custom'">
+              <ng-container
+                *ngIf="col.template"
+                [ngTemplateOutlet]="col.template"
+                [ngTemplateOutletContext]="{ $implicit: row, value: getCellValue(row, col) }">
+              </ng-container>
+            </ng-container>
+
+          </ng-container>
+          <!-- ── end cell switch ─────────────────────────────────────── -->
+
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+  FOOTER  (toggle count + pagination independently)
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="dt-footer" *ngIf="showFooter">
+
+  <!-- Showing X–Y of Z entries -->
+  <span class="dt-count" *ngIf="config.showFooterCount !== false">
+    Showing {{ countStart }}–{{ countEnd }} of {{ totalItems }} entries
+  </span>
+
+  <!-- Pagination -->
+  <div class="dt-pagination" *ngIf="config.showPagination !== false && totalPages > 0">
+
+    <!-- Prev -->
+    <button
+      class="dt-pag-btn"
+      [disabled]="currentPage <= 1"
+      (click)="prevPage()"
+      [innerHTML]="icons['chevronLeft']"
+      title="Previous">
+    </button>
+
+    <!-- Page numbers -->
+    <button
+      *ngFor="let p of pages"
+      class="dt-pag-btn"
+      [class.dt-pag-btn--active]="p === currentPage"
+      (click)="goToPage(p)">
+      {{ p }}
+    </button>
+
+    <!-- Next -->
+    <button
+      class="dt-pag-btn"
+      [disabled]="currentPage >= totalPages"
+      (click)="nextPage()"
+      [innerHTML]="icons['chevronRight']"
+      title="Next">
+    </button>
+
+  </div>
+</div>
+</div>

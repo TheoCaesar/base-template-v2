@@ -1,0 +1,14 @@
+<div class="flex min-h-screen">
+
+  <!-- Sidebar: logo header + nav + user footer, full height -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Content column: navbar on top, page body below -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <app-navbar></app-navbar>
+    <main class="flex-1 overflow-auto">
+      <router-outlet />
+    </main>
+  </div>
+
+</div>

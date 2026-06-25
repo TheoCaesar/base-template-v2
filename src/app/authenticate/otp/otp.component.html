@@ -1,0 +1,80 @@
+
+
+  <!-- Back button -->
+  <button class="otp-back" (click)="goBack()">
+    <span [innerHTML]="icons['chevronLeft']" class="otp-back__icon"></span>
+    <span>Back</span>
+  </button>
+
+  <!-- Main card -->
+  <div class="otp-card">
+
+    <!-- Heading -->
+    <h1 class="otp-card__heading">Verify it's you</h1>
+
+    <!-- Description -->
+    <p class="otp-card__desc">
+      We sent a 6-digit code to <strong>{{ config.maskedPhone }}</strong>. Enter it below to continue.
+    </p>
+
+    <!-- OTP Input boxes -->
+    <form [formGroup]="otpForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <div class="otp-inputs" (paste)="onOtpPaste($event)">
+        <input
+          #otpInput
+          *ngFor="let digit of otpDigits; let i = index"
+          class="otp-input"
+          type="text"
+          inputmode="numeric"
+          maxlength="1"
+          [formControl]="digit"
+          (input)="onOtpInput($event, i)"
+          (keydown)="onOtpKeyDown($event, i)"
+          [attr.aria-label]="'Digit ' + (i + 1) + ' of ' + config.codeLength"
+          placeholder="0" />
+      </div>
+
+      <!-- Timer and resend -->
+      <div class="otp-timer">
+        <span class="otp-timer__label">Code expires in</span>
+        <span class="otp-timer__time">{{ getFormattedTime() }}</span>
+        <span class="otp-timer__sep">·</span>
+        <button
+          *ngIf="!canResend"
+          type="button"
+          class="otp-timer__resend otp-timer__resend--disabled"
+          disabled>
+          Resend in {{ getFormattedTime() }}s
+        </button>
+        <button
+          *ngIf="canResend"
+          type="button"
+          class="otp-timer__resend"
+          (click)="onResend()">
+          Resend
+        </button>
+      </div>
+
+      <!-- Submit button -->
+      <button
+        type="submit"
+        class="otp-btn"
+        [disabled]="isSubmitting || !otpForm.valid">
+        {{ isSubmitting ? 'Verifying…' : 'Verify & sign in' }}
+      </button>
+
+    </form>
+
+    <!-- Notice box -->
+    <div class="otp-notice">
+      <span class="otp-notice__icon" [innerHTML]="icons['phone']"></span>
+      <span class="otp-notice__text">
+        Didn't receive a code? Confirm your number with your security officer or
+        call the IT helpdesk at
+        <a href="tel:" class="otp-notice__link">{{ config.supportPhone }}</a>.
+      </span>
+    </div>
+
+  </div><!-- /otp-card -->
+

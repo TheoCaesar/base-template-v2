@@ -1,0 +1,264 @@
+// ── Color Variables ───────────────────────────────────────────────────────────────
+$back-link:            #166534;
+$back-link-hover:      #14532D;
+$heading-color:        #111827;
+$body-text:            #6B7280;
+
+// OTP inputs
+$otp-border:           #E5E7EB;
+$otp-border-focus:     #166534;
+$otp-bg:               #FFFFFF;
+$otp-text:             #111827;
+
+// Timer & resend
+$timer-text:           #6B7280;
+$resend-link:          #166534;
+$resend-disabled:      #9CA3AF;
+
+// Submit button
+$btn-bg:               #166534;
+$btn-bg-hover:         #14532D;
+$btn-text:             #FFFFFF;
+
+// Notice
+$notice-bg:            #F0FDF4;
+$notice-border:        #BBF7D0;
+$notice-icon:          #22C55E;
+$notice-text:          #374151;
+$notice-link:          #166534;
+
+// Layout
+$card-max-width:       480px;
+$transition:           0.15s ease;
+
+// ── Page shell ───────────────────────────────────────────────────────────────────
+.otp-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #FFFFFF;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+}
+
+// ── Back button ────────────────────────────────────────────────────────────────────
+.otp-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  color: $back-link;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color $transition;
+  &:hover { color: $back-link-hover; }
+}
+
+.otp-back__icon {
+  display: flex;
+  align-items: center;
+  ::ng-deep svg { stroke: currentColor; display: block; }
+}
+
+// ── Card ───────────────────────────────────────────────────────────────────────────
+.otp-card {
+  width: 100%;
+  max-width: $card-max-width;
+}
+
+.otp-card__heading {
+  font-size: 28px;
+  font-weight: 700;
+  color: $heading-color;
+  margin: 0 0 12px;
+  line-height: 1.2;
+}
+
+.otp-card__desc {
+  font-size: 14px;
+  color: $body-text;
+  line-height: 1.6;
+  margin: 0 0 32px;
+
+  strong { color: $heading-color; font-weight: 500; }
+}
+
+// ── OTP inputs ─────────────────────────────────────────────────────────────────────
+form { width: 100%; }
+
+.otp-inputs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.otp-input {
+  width: 56px;
+  height: 56px;
+  border: 1.5px solid $otp-border;
+  border-radius: 8px;
+  background: $otp-bg;
+  color: $otp-text;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  cursor: text;
+  transition: border-color $transition, box-shadow $transition;
+
+  &:focus {
+    outline: none;
+    border-color: $otp-border-focus;
+    box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.08);
+  }
+
+  &:not(:placeholder-shown) {
+    background: $notice-bg;
+    border-color: $otp-border-focus;
+  }
+
+  &::placeholder { color: #E5E7EB; }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type=number] { -moz-appearance: textfield; }
+}
+
+// ── Timer & resend ────────────────────────────────────────────────────────────────
+.otp-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 24px;
+  font-size: 12.5px;
+}
+
+.otp-timer__label { color: $timer-text; }
+.otp-timer__time   { color: $body-text; font-weight: 500; }
+.otp-timer__sep    { color: $body-text; opacity: 0.5; }
+
+.otp-timer__resend {
+  background: transparent;
+  border: none;
+  color: $resend-link;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  transition: opacity $transition;
+
+  &:hover { opacity: 0.8; }
+
+  &--disabled {
+    color: $resend-disabled;
+    cursor: not-allowed;
+    opacity: 1;
+  }
+}
+
+// ── Submit button ──────────────────────────────────────────────────────────────────
+.otp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 44px;
+  background: $btn-bg;
+  color: $btn-text;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background $transition, opacity $transition;
+  margin-bottom: 16px;
+
+  &:hover:not(:disabled) { background: $btn-bg-hover; }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// ── Notice box ─────────────────────────────────────────────────────────────────────
+.otp-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: $notice-bg;
+  border: 1px solid $notice-border;
+}
+
+.otp-notice__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: $notice-icon;
+  margin-top: 1px;
+
+  ::ng-deep svg { stroke: currentColor; display: block; }
+}
+
+.otp-notice__text {
+  font-size: 12.5px;
+  color: $notice-text;
+  line-height: 1.5;
+}
+
+.otp-notice__link {
+  color: $notice-link;
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover { text-decoration: underline; }
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────────
+@media (max-width: 600px) {
+  .otp-page { padding: 16px; }
+
+  .otp-back {
+    top: 16px;
+    left: 16px;
+    font-size: 12px;
+  }
+
+  .otp-card__heading { font-size: 24px; }
+
+  .otp-input {
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .otp-card { max-width: 100%; }
+}
+
+@media (max-width: 400px) {
+  .otp-inputs { gap: 6px; }
+
+  .otp-input {
+    width: 42px;
+    height: 42px;
+    font-size: 14px;
+  }
+
+  .otp-card__desc { font-size: 13px; }
+
+  .otp-timer { font-size: 11px; }
+}
