@@ -25,7 +25,7 @@
         <div class="form-group">
           <label class="form-label" for="login-email">Work email</label>
           <div class="form-input-wrap"
-               [class.form-input-wrap--error]="email?.invalid && email.touched">
+               [class.form-input-wrap--error]="email && email?.invalid && email.touched">
             <span class="form-input-icon" [innerHTML]="icons['mail']"></span>
             <input
               id="login-email"
@@ -47,7 +47,7 @@
         <div class="form-group">
           <label class="form-label" for="login-password">Password</label>
           <div class="form-input-wrap"
-               [class.form-input-wrap--error]="password?.invalid && password.touched">
+               [class.form-input-wrap--error]="password?.invalid && password?.touched">
             <span class="form-input-icon" [innerHTML]="icons['lock']"></span>
             <input
               id="login-password"
